@@ -176,6 +176,463 @@ Before drawing, ask: *Would a reader learn more from this than from a well-writt
 
 ---
 
+## Examples
+
+### Flowchart — User login flow with validation
+
+**Scenario:** A user submits credentials, passes format and password checks, optionally completes 2FA, and is granted a session—or rejected at any failure gate.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph TD
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+
+    Start([Start]) --> Submit[Submit credentials]
+    Submit --> Validate{Format valid?}
+    Validate -->|Yes| CheckPW[Check password]
+    Validate -->|No| Reject[Return 401]
+    CheckPW -->|OK| TwoFA{2FA enabled?}
+    CheckPW -->|Fail| Reject
+    TwoFA -->|Yes| Verify[Verify token]
+    TwoFA -->|No| Grant[Grant session]
+    Verify --> Grant
+    Grant --> End([End])
+    Reject --> End
+
+    class Grant focal;
+    class Submit,CheckPW,Verify,Reject backend;
+
+%% Legend:
+%% ■ Focal (coral) — successful session grant
+%% □ Backend — process step
+```
+
+---
+
+### Sequence — OAuth2 handshake (4 actors)
+
+**Scenario:** A user initiates login through a client, the authorization server issues a code and exchanges it for an access token, and the client calls a protected API.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'actorBkg': '#faf7f2',
+    'actorBorder': '#1c1917',
+    'actorTextColor': '#1c1917',
+    'actorLineColor': '#57534e',
+    'signalColor': '#1c1917',
+    'signalTextColor': '#1c1917',
+    'labelBoxBkgColor': '#faf7f2',
+    'labelBoxBorderColor': '#57534e',
+    'labelTextColor': '#1c1917',
+    'loopTextColor': '#1c1917',
+    'noteBorderColor': '#57534e',
+    'noteBkgColor': '#f2ede4',
+    'noteTextColor': '#1c1917',
+    'activationBorderColor': '#57534e',
+    'activationBkgColor': '#f2ede4',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+sequenceDiagram
+    participant U as User
+    participant C as Client
+    participant A as AuthServer
+    participant R as API
+
+    U->>C: Click login
+    C->>A: Request auth
+    A->>U: Redirect login
+    U->>A: Credentials
+    A-->>C: Auth code
+    C->>+A: Exchange code
+    A-->>-C: Access token
+    C->>R: Request data
+    R-->>C: Protected data
+
+%% Legend:
+%% AuthServer is the focal authority
+%% Actors: User, Client, AuthServer, API
+```
+
+---
+
+### Architecture — Web app → API → services → database
+
+**Scenario:** A single-page web app reaches an API gateway that routes traffic to domain services, each reading from a shared PostgreSQL database and a Redis cache.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph LR
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+    classDef store fill:#f5f4f3,stroke:#57534e,stroke-width:1px,color:#1c1917;
+
+    Web[Web App] --> API[API Gateway]
+    API --> Orders[Order Service]
+    API --> Users[User Service]
+    Orders --> Cache[(Redis)]
+    Orders --> DB[(PostgreSQL)]
+    Users --> DB
+
+    class Orders focal;
+    class Web,API,Users backend;
+    class Cache,DB store;
+
+%% Legend:
+%% ■ Focal (coral) — primary service
+%% □ Backend — service / gateway
+%% ▤ Store — database / cache
+```
+
+---
+
+### State — Order lifecycle
+
+**Scenario:** An order moves from draft to pending approval, then through publish to archive, with each transition triggered by an explicit business event.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Pending : submit
+    Pending --> Approved : approve
+    Approved --> Published : publish
+    Published --> Archived : archive
+    Archived --> [*]
+
+%% Legend:
+%% Published is the focal milestone
+%% Standard states: Draft, Pending, Approved, Archived
+```
+
+---
+
+### ER — E-commerce model
+
+**Scenario:** A customer places orders containing line items, each line item linking to a product, forming a normalized e-commerce domain model.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    CUSTOMER {
+        int id PK
+        string email UK
+        string name
+    }
+    ORDER ||--|{ LINE_ITEM : contains
+    ORDER {
+        int id PK
+        int customer_id FK
+        datetime created_at
+        string status
+    }
+    LINE_ITEM {
+        int id PK
+        int order_id FK
+        int product_id FK
+        int quantity
+    }
+    PRODUCT ||--o{ LINE_ITEM : "ordered in"
+    PRODUCT {
+        int id PK
+        string sku UK
+        string name
+        decimal price
+    }
+
+%% Legend:
+%% Central entity: ORDER (aggregate root)
+%% || one  ○ zero  { many
+```
+
+---
+
+### Timeline — Product roadmap 2023–2024
+
+**Scenario:** A startup ships a public beta in 2023, releases v1.0 and enterprise features in 2024, and closes a Series A by year end.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+timeline
+    title Product Roadmap 2023–2024
+    2023 Q1 : Seed funding
+            : Core team hired
+    2023 Q3 : Public beta launch
+    2024 Q1 : V1.0 RELEASE
+    2024 Q2 : Enterprise features
+            : SOC 2 compliance
+    2024 Q4 : Series A
+
+%% Focal milestones: V1.0 RELEASE, Series A
+```
+
+---
+
+### Quadrant — Q2 projects by Impact vs Effort
+
+**Scenario:** Six proposed Q2 initiatives are plotted to reveal quick wins, strategic bets, and items that should be deferred.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+quadrantChart
+    title Q2 Projects by Impact vs Effort
+    x-axis Low Effort --> High Effort
+    y-axis Low Impact --> High Impact
+    quadrant-1 Do First
+    quadrant-2 Quick Wins
+    quadrant-3 Deprioritize
+    quadrant-4 Strategic Bets
+    Auth rewrite: [0.2, 0.8]
+    Dark mode: [0.3, 0.6]
+    API v2: [0.7, 0.9]
+    Mobile app: [0.8, 0.4]
+    Onboarding revamp: [0.4, 0.7]
+    Docs update: [0.2, 0.3]
+
+%% Focal: Auth rewrite (Quick Win — high impact, low effort)
+%% Top-right position = Do First priority
+```
+
+---
+
+### Tree — API gateway dependency tree
+
+**Scenario:** The API gateway fans out to three downstream services, with the order service depending on Redis and PostgreSQL, and the user service depending on Kafka.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph TD
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+    classDef store fill:#f5f4f3,stroke:#57534e,stroke-width:1px,color:#1c1917;
+
+    API[API Gateway] --> Auth[Auth Service]
+    API --> Order[Order Service]
+    API --> User[User Service]
+    Order --> Cache[(Redis)]
+    Order --> DB[(PostgreSQL)]
+    User --> Events[(Kafka)]
+
+    class Order focal;
+    class Auth,User backend;
+    class Cache,DB,Events store;
+
+%% Legend:
+%% ■ Focal (coral) — primary downstream service
+%% □ Backend — service
+%% ▤ Store — database / cache / queue
+```
+
+---
+
+### Swimlane — Design → Engineering → QA → Deploy
+
+**Scenario:** A feature moves through four functional lanes, from design specs to production deployment, with code review and testing as explicit gates.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph LR
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+
+    subgraph Design [Design]
+        D1[Design specs]
+    end
+    subgraph Engineering [Engineering]
+        E1[Build feature]
+        E2[Code review]
+    end
+    subgraph QA [QA]
+        Q1[Run tests]
+    end
+    subgraph Deploy [Deploy]
+        P1[Deploy to prod]
+    end
+
+    D1 --> E1
+    E1 --> E2
+    E2 --> Q1
+    Q1 --> P1
+
+    class E1 focal;
+    class D1,E2,Q1,P1 backend;
+
+%% Legend:
+%% ■ Focal (coral) — critical implementation step
+%% □ Backend — process step
+```
+
+---
+
+### Layer stack — Full-stack application layers
+
+**Scenario:** A modern stack is shown as five descending layers, from the React client down through gateway, services, cache, and PostgreSQL.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph TB
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef layer fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+
+    L1[Client<br/>React + Vite] --> L2[Gateway<br/>Kong / Nginx]
+    L2 --> L3[Services<br/>Node.js + gRPC]
+    L3 --> L4[Cache<br/>Redis Cluster]
+    L4 --> L5[Database<br/>PostgreSQL]
+
+    class L3 focal;
+    class L1,L2,L4,L5 layer;
+
+%% Direction: requests flow downward
+%% Focal: Services layer — core business logic
+```
+
+---
+
+### Nested — Config cascade (Global → Org → Team → Repo)
+
+**Scenario:** Configuration resolution narrows from global defaults through organization and team scopes, ending at the most specific repository-level file.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'clusterBkg': '#f2ede4',
+    'clusterBorder': 'rgba(28,25,23,0.12)',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph TD
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef node fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+
+    subgraph Global [Global Scope]
+        subgraph Org [Organization]
+            subgraph Team [Team]
+                subgraph Repo [Repository]
+                    Config[config.yaml]
+                end
+            end
+        end
+    end
+
+    class Config focal;
+
+%% Legend:
+%% ■ Focal (coral) — most specific config file
+%% □ Node — scoped container
+```
+
+---
+
 ## License
 
 MIT
