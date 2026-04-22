@@ -30,24 +30,63 @@ All diagrams ship with an editorial palette (warm paper, ink, coral accent) and 
 
 ## Install
 
-### Claude Code (skills directory)
+This skill uses the **open SKILL.md standard** — a single `SKILL.md` file with YAML frontmatter inside a named folder. It works natively across Claude Code, OpenCode, GitHub Copilot CLI (Codex), Antigravity, and any other agent that follows the same convention. No separate versions needed.
 
+### Claude Code
+
+**Skills directory:**
 ```bash
 git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.claude/skills/mermaid-design
 ```
+Restart Claude Code. The skill registers as `mermaid-design`.
 
-Restart Claude Code. The skill registers as `mermaid-design` and activates whenever you ask Claude to make a diagram.
-
-### Claude Code (plugin)
-
+**Plugin marketplace:**
 ```bash
 /plugin marketplace add iamvaleriofantozzi/mermaid-design
 /plugin install mermaid-design@mermaid-design
 ```
 
+### OpenCode / Paseo
+
+```bash
+git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.config/opencode/skills/mermaid-design
+# or
+ln -s ~/.claude/skills/mermaid-design ~/.config/opencode/skills/mermaid-design
+```
+OpenCode also searches `.claude/skills/` and `.agents/skills/` automatically, so sharing the same clone with Claude Code works out of the box.
+
+### GitHub Copilot CLI (Codex)
+
+**Project-level** (inside your repo):
+```bash
+git clone git@github.com:iamvaleriofantozzi/mermaid-design.git .github/skills/mermaid-design
+# or
+ln -s ~/.claude/skills/mermaid-design .github/skills/mermaid-design
+```
+
+**Personal** (global):
+```bash
+git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.copilot/skills/mermaid-design
+# or
+ln -s ~/.claude/skills/mermaid-design ~/.copilot/skills/mermaid-design
+```
+Run `/skills reload` in the CLI if already open.
+
+### Antigravity
+
+**Project-level:**
+```bash
+git clone git@github.com:iamvaleriofantozzi/mermaid-design.git .agents/skills/mermaid-design
+```
+
+**Global:**
+```bash
+git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.gemini/antigravity/skills/mermaid-design
+```
+
 ### Manual use
 
-You don't need Claude Code to use this. Copy any example from [`examples/`](examples/) and paste it into the [Mermaid Live Editor](https://mermaid.live/).
+You don't need an AI agent to use this. Copy any example from [`examples/`](examples/) and paste it into the [Mermaid Live Editor](https://mermaid.live/).
 
 ---
 
@@ -58,13 +97,13 @@ Make me a flowchart of the login flow: start, validate input, check credentials,
 return token or error.
 ```
 
-Claude will pick the right type, build the Mermaid code, and output it wrapped in triple backticks. Paste it into GitHub, Notion, Obsidian, or any Mermaid-compatible viewer.
+Your agent will pick the right type, build the Mermaid code, and output it wrapped in triple backticks. Paste it into GitHub, Notion, Obsidian, or any Mermaid-compatible viewer.
 
 ```
 Make me a sequence diagram of the OAuth handshake in dark mode.
 ```
 
-Claude will use the dark token palette and set the init block accordingly.
+The agent will use the dark token palette and set the init block accordingly.
 
 ---
 
@@ -82,7 +121,7 @@ Full spec in [`references/style-guide.md`](references/style-guide.md).
 
 ## Architecture
 
-Progressive disclosure. `SKILL.md` is a lean index — it tells Claude how to pick a type and where to look for detail. Every type lives in its own reference file, loaded only when relevant.
+Progressive disclosure. `SKILL.md` is a lean index — it tells the agent how to pick a type and where to look for detail. Every type lives in its own reference file, loaded only when relevant.
 
 ```
 mermaid-design/
@@ -105,7 +144,7 @@ mermaid-design/
 └── README.md
 ```
 
-This keeps Claude's working context tight (only load what you need) and makes the skill easy to extend.
+This keeps the agent's working context tight (only load what you need) and makes the skill easy to extend.
 
 ---
 
