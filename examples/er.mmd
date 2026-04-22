@@ -1,0 +1,41 @@
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    CUSTOMER {
+        int id PK
+        string email UK
+        string name
+    }
+    ORDER ||--|{ LINE_ITEM : contains
+    ORDER {
+        int id PK
+        int customer_id FK
+        datetime created_at
+        string status
+    }
+    LINE_ITEM {
+        int id PK
+        int order_id FK
+        int product_id FK
+        int quantity
+    }
+    PRODUCT ||--o{ LINE_ITEM : "ordered in"
+    PRODUCT {
+        int id PK
+        string sku UK
+        string name
+        decimal price
+    }
+```

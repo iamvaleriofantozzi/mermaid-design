@@ -1,0 +1,34 @@
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph TD
+    classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+    classDef store fill:rgba(28,25,23,0.05),stroke:#57534e,stroke-width:1px,color:#1c1917;
+
+    Start([Start]) --> Validate{Input valid?}
+    Validate -->|Yes| Process[Process request]
+    Validate -->|No| Reject[Return 400]
+    Process --> Save[(Save to DB)]
+    Save --> Respond[Return 200]
+    Respond --> End([End])
+    Reject --> End
+
+    class Process focal;
+    class Save store;
+
+%% Legend:
+%% ■ Focal (coral) — primary action
+%% □ Backend — step / action
+%% ▤ Store — database
+```

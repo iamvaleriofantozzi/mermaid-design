@@ -1,0 +1,8 @@
+{
+  "name": "mermaid-design",
+  "description": "Editorial-quality Mermaid diagrams. Eleven types, one design system, portable code.",
+  "author": "iamvaleriofantozzi",
+  "repository": "https://github.com/iamvaleriofantozzi/mermaid-design",
+  "license": "MIT",
+  "tags": ["diagrams", "mermaid", "visualization", "documentation"]
+}

@@ -1,0 +1,28 @@
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph TB
+    classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef layer fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+
+    L1[Application<br/>React + Next.js] --> L2[API<br/>GraphQL Gateway]
+    L2 --> L3[Services<br/>Node.js microservices]
+    L3 --> L4[Cache<br/>Redis]
+    L4 --> L5[Database<br/>PostgreSQL]
+
+    class L3 focal;
+    class L1,L2,L4,L5 layer;
+
+%% Direction: abstraction increases upward
+%% Focal: Services layer — where business logic lives
+```

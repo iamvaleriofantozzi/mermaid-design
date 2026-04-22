@@ -1,0 +1,32 @@
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+graph LR
+    classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
+    classDef store fill:rgba(28,25,23,0.05),stroke:#57534e,stroke-width:1px,color:#1c1917;
+
+    Web[Web App] --> API[API Gateway]
+    API --> SVC[Order Service]
+    SVC --> Cache[(Redis)]
+    SVC --> DB[(PostgreSQL)]
+
+    class SVC focal;
+    class Cache store;
+    class DB store;
+
+%% Legend:
+%% ■ Focal (coral) — primary service
+%% □ Backend — service / API
+%% ▤ Store — database / cache
+```

@@ -1,0 +1,5 @@
+{
+  "name": "mermaid-design",
+  "description": "Create editorial-quality diagrams using Mermaid.js syntax. Eleven diagram types with a design system, complexity budget, and taste gate.",
+  "skills": ["./"]
+}

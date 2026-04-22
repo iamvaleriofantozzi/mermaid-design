@@ -1,0 +1,37 @@
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'actorBkg': '#faf7f2',
+    'actorBorder': '#1c1917',
+    'actorTextColor': '#1c1917',
+    'actorLineColor': '#57534e',
+    'signalColor': '#1c1917',
+    'signalTextColor': '#1c1917',
+    'labelBoxBkgColor': '#faf7f2',
+    'labelBoxBorderColor': '#57534e',
+    'labelTextColor': '#1c1917',
+    'loopTextColor': '#1c1917',
+    'noteBorderColor': '#57534e',
+    'noteBkgColor': '#f2ede4',
+    'noteTextColor': '#1c1917',
+    'activationBorderColor': '#57534e',
+    'activationBkgColor': '#f2ede4',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+sequenceDiagram
+    participant Web as Web App
+    participant API as API Gateway
+    participant Auth as Auth Service
+    participant DB as Database
+
+    Web->>API: POST /login
+    API->>+Auth: Validate credentials
+    Auth->>DB: Query user
+    DB-->>Auth: User record
+    Auth-->>-API: JWT token
+    API-->>Web: 200 + token
+
+    Note right of API: Token expires in 15 min
+```

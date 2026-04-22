@@ -1,0 +1,28 @@
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#faf7f2',
+    'primaryTextColor': '#1c1917',
+    'primaryBorderColor': '#1c1917',
+    'lineColor': '#57534e',
+    'secondaryColor': '#f2ede4',
+    'tertiaryColor': '#ffffff',
+    'fontFamily': 'Geist, sans-serif'
+  }
+}%%
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Pending : submit
+    Pending --> Approved : approve
+    Pending --> Rejected : reject
+    Approved --> Published : publish
+    Rejected --> Draft : revise
+    Published --> Archived : archive
+    Archived --> [*]
+
+    Note right of Rejected
+        Error path —
+        returns to Draft
+    End note
+```
