@@ -348,18 +348,6 @@ stateDiagram-v2
 **Scenario:** A customer places orders containing line items, each line item linking to a product, forming a normalized e-commerce domain model.
 
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#faf7f2',
-    'primaryTextColor': '#1c1917',
-    'primaryBorderColor': '#1c1917',
-    'lineColor': '#57534e',
-    'secondaryColor': '#f2ede4',
-    'tertiaryColor': '#ffffff',
-    'fontFamily': 'Geist, sans-serif'
-  }
-}%%
 erDiagram
     CUSTOMER ||--o{ ORDER : places
     CUSTOMER {
@@ -385,7 +373,7 @@ erDiagram
         int id PK
         string sku UK
         string name
-        decimal price
+        float price
     }
 
 %% Legend:
@@ -400,20 +388,8 @@ erDiagram
 **Scenario:** A startup ships a public beta in 2023, releases v1.0 and enterprise features in 2024, and closes a Series A by year end.
 
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#faf7f2',
-    'primaryTextColor': '#1c1917',
-    'primaryBorderColor': '#1c1917',
-    'lineColor': '#57534e',
-    'secondaryColor': '#f2ede4',
-    'tertiaryColor': '#ffffff',
-    'fontFamily': 'Geist, sans-serif'
-  }
-}%%
 timeline
-    title Product Roadmap 2023–2024
+    title Product Roadmap 2023-2024
     2023 Q1 : Seed funding
             : Core team hired
     2023 Q3 : Public beta launch
@@ -432,18 +408,6 @@ timeline
 **Scenario:** Six proposed Q2 initiatives are plotted to reveal quick wins, strategic bets, and items that should be deferred.
 
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#faf7f2',
-    'primaryTextColor': '#1c1917',
-    'primaryBorderColor': '#1c1917',
-    'lineColor': '#57534e',
-    'secondaryColor': '#f2ede4',
-    'tertiaryColor': '#ffffff',
-    'fontFamily': 'Geist, sans-serif'
-  }
-}%%
 quadrantChart
     title Q2 Projects by Impact vs Effort
     x-axis Low Effort --> High Effort

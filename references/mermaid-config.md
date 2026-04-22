@@ -234,6 +234,7 @@ Not all Mermaid features work everywhere. Use this table to decide what is safe.
 |---|---|---|---|---|---|
 | `%%{init}%%` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `theme: base` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `themeVariables` in erDiagram / timeline / quadrantChart | ❌ | ❌ | ❌ | ❌ | ❌ |
 | `look: handDrawn` | ❌ | ❓ | ✅ | ❓ | ✅ |
 | `classDef` in flowchart / graph | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `classDef` in sequenceDiagram | ❌ | ❌ | ❌ | ❌ | ❌ |

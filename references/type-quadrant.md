@@ -42,18 +42,6 @@ quadrantChart
 ## Example
 
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#faf7f2',
-    'primaryTextColor': '#1c1917',
-    'primaryBorderColor': '#1c1917',
-    'lineColor': '#57534e',
-    'secondaryColor': '#f2ede4',
-    'tertiaryColor': '#ffffff',
-    'fontFamily': 'Geist, sans-serif'
-  }
-}%%
 quadrantChart
     title Q2 Projects by Impact vs Effort
     x-axis Low Effort --> High Effort
@@ -69,6 +57,8 @@ quadrantChart
     Onboarding revamp: [0.4, 0.7]
     Docs update: [0.2, 0.3]
 ```
+
+> **Note:** Do not use `%%{init}%%` with custom `themeVariables` in `quadrantChart` — support is inconsistent across viewers and may produce "Invalid Mermaid code".
 
 ## Note on focal signal
 

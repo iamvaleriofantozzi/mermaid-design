@@ -46,18 +46,6 @@ erDiagram
 ## Example
 
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#faf7f2',
-    'primaryTextColor': '#1c1917',
-    'primaryBorderColor': '#1c1917',
-    'lineColor': '#57534e',
-    'secondaryColor': '#f2ede4',
-    'tertiaryColor': '#ffffff',
-    'fontFamily': 'Geist, sans-serif'
-  }
-}%%
 erDiagram
     CUSTOMER ||--o{ ORDER : places
     CUSTOMER {
@@ -83,13 +71,13 @@ erDiagram
         int id PK
         string sku UK
         string name
-        decimal price
+        float price
     }
 ```
 
 ## Note on styling
 
-`erDiagram` has **limited** `themeVariables` support and **does not support** `classDef`. The init block sets the base palette, but you cannot color individual entities. Keep the diagram clean through:
+`erDiagram` has **limited** `themeVariables` support and **does not support** `classDef`. Do not use an `%%{init}%%` block with custom `themeVariables` — it is often ignored and may cause "Invalid Mermaid code" on some viewers. Keep the diagram clean through:
 1. **Naming** — the aggregate root should have the clearest, most central name.
 2. **Relationship density** — the focal entity has the most connections.
 3. **Comments** — use `%%` to explain the focal model below the diagram.

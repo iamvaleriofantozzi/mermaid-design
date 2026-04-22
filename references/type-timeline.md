@@ -36,18 +36,6 @@ timeline
 ## Example
 
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#faf7f2',
-    'primaryTextColor': '#1c1917',
-    'primaryBorderColor': '#1c1917',
-    'lineColor': '#57534e',
-    'secondaryColor': '#f2ede4',
-    'tertiaryColor': '#ffffff',
-    'fontFamily': 'Geist, sans-serif'
-  }
-}%%
 timeline
     title Product Roadmap
     2023 Q1 : Seed funding
@@ -64,3 +52,5 @@ timeline
 ## Limitation
 
 `timeline` is **linear and discrete**. It does not support branching, non-linear scales, or duration bars. For tasks with durations and dependencies, use `gantt` instead.
+
+> **Note:** Do not use `%%{init}%%` with custom `themeVariables` in `timeline` — support is inconsistent across viewers and may produce "Invalid Mermaid code".

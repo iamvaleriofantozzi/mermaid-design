@@ -1,16 +1,4 @@
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#faf7f2',
-    'primaryTextColor': '#1c1917',
-    'primaryBorderColor': '#1c1917',
-    'lineColor': '#57534e',
-    'secondaryColor': '#f2ede4',
-    'tertiaryColor': '#ffffff',
-    'fontFamily': 'Geist, sans-serif'
-  }
-}%%
 erDiagram
     CUSTOMER ||--o{ ORDER : places
     CUSTOMER {
@@ -36,6 +24,6 @@ erDiagram
         int id PK
         string sku UK
         string name
-        decimal price
+        float price
     }
 ```
