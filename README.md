@@ -1,4 +1,4 @@
-# Mermaid Design
+# Mermaid Design 🎨
 
 **Editorial-quality diagrams as portable Mermaid code.**
 
@@ -30,63 +30,36 @@ All diagrams ship with an editorial palette (warm paper, ink, coral accent) and 
 
 ## Install
 
-This skill uses the **open SKILL.md standard** — a single `SKILL.md` file with YAML frontmatter inside a named folder. It works natively across Claude Code, OpenCode, GitHub Copilot CLI (Codex), Antigravity, and any other agent that follows the same convention. No separate versions needed.
+This skill uses the **open SKILL.md standard** — a single `SKILL.md` file with YAML frontmatter inside a named folder. Works natively across Claude Code, OpenCode, GitHub Copilot CLI (Codex), Antigravity, and any other agent that follows the same convention. No separate versions needed.
 
 ### Claude Code
-
-**Skills directory:**
 ```bash
 git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.claude/skills/mermaid-design
 ```
 Restart Claude Code. The skill registers as `mermaid-design`.
 
-**Plugin marketplace:**
-```bash
-/plugin marketplace add iamvaleriofantozzi/mermaid-design
-/plugin install mermaid-design@mermaid-design
-```
-
 ### OpenCode / Paseo
-
 ```bash
 git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.config/opencode/skills/mermaid-design
-# or
+# or symlink from Claude Code
 ln -s ~/.claude/skills/mermaid-design ~/.config/opencode/skills/mermaid-design
 ```
-OpenCode also searches `.claude/skills/` and `.agents/skills/` automatically, so sharing the same clone with Claude Code works out of the box.
 
 ### GitHub Copilot CLI (Codex)
-
-**Project-level** (inside your repo):
 ```bash
+# Project-level
 git clone git@github.com:iamvaleriofantozzi/mermaid-design.git .github/skills/mermaid-design
-# or
-ln -s ~/.claude/skills/mermaid-design .github/skills/mermaid-design
-```
-
-**Personal** (global):
-```bash
+# Personal (global)
 git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.copilot/skills/mermaid-design
-# or
-ln -s ~/.claude/skills/mermaid-design ~/.copilot/skills/mermaid-design
 ```
-Run `/skills reload` in the CLI if already open.
 
 ### Antigravity
-
-**Project-level:**
 ```bash
 git clone git@github.com:iamvaleriofantozzi/mermaid-design.git .agents/skills/mermaid-design
 ```
 
-**Global:**
-```bash
-git clone git@github.com:iamvaleriofantozzi/mermaid-design.git ~/.gemini/antigravity/skills/mermaid-design
-```
-
 ### Manual use
-
-You don't need an AI agent to use this. Copy any example from [`examples/`](examples/) and paste it into the [Mermaid Live Editor](https://mermaid.live/).
+Copy any example below and paste it into the [Mermaid Live Editor](https://mermaid.live/).
 
 ---
 
@@ -97,108 +70,19 @@ Make me a flowchart of the login flow: start, validate input, check credentials,
 return token or error.
 ```
 
-Your agent will pick the right type, build the Mermaid code, and output it wrapped in triple backticks. Paste it into GitHub, Notion, Obsidian, or any Mermaid-compatible viewer.
+Your agent picks the right type, builds the Mermaid code, and outputs it wrapped in triple backticks. Paste it into any Mermaid-compatible viewer.
 
 ```
 Make me a sequence diagram of the OAuth handshake in dark mode.
 ```
 
-The agent will use the dark token palette and set the init block accordingly.
-
----
-
-## Design system
-
-- **One accent** (coral/rust) on 1–2 focal elements max.
-- **Warm paper** background, **ink** text, **muted** secondary lines.
-- **Sans-serif** for names, **monospace** for technical sublabels (ports, URLs, field types).
-- **No shadows, no gradients, no neon glow.**
-- **Complexity budget**: max 9 nodes, max 12 arrows, max 2 focal elements.
-
-Full spec in [`references/style-guide.md`](references/style-guide.md).
-
----
-
-## Architecture
-
-Progressive disclosure. `SKILL.md` is a lean index — it tells the agent how to pick a type and where to look for detail. Every type lives in its own reference file, loaded only when relevant.
-
-```
-mermaid-design/
-├── SKILL.md                    # Philosophy, selection guide, taste gate
-├── references/
-│   ├── style-guide.md          # Colors, typography, tokens
-│   ├── mermaid-config.md       # Init blocks, classDef, viewer compatibility
-│   ├── type-flowchart.md
-│   ├── type-sequence.md
-│   ├── type-architecture.md
-│   ├── type-state.md
-│   ├── type-er.md
-│   ├── type-timeline.md
-│   ├── type-quadrant.md
-│   ├── type-tree.md
-│   ├── type-swimlane.md
-│   ├── type-layers.md
-│   └── type-nested.md
-├── examples/                   # One working .mmd per type
-└── README.md
-```
-
-This keeps the agent's working context tight (only load what you need) and makes the skill easy to extend.
-
----
-
-## Viewer compatibility
-
-| Feature | GitHub | Notion | Obsidian | GitLab | VS Code |
-|---|---|---|---|---|---|
-| `%%{init}%%` | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `theme: base` | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `classDef` (flowchart/sequence/state) | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `architecture-beta` | ❓ | ❓ | ❓ | ❓ | ✅ |
-| `quadrantChart` | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `timeline` | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `mindmap` | ❓ | ❓ | ✅ | ❓ | ✅ |
-| `block-beta` | ❓ | ❓ | ❓ | ❓ | ✅ |
-
-### Mermaid version requirements
-
-Some diagram types need a recent Mermaid version. Older apps (e.g., MarkText, legacy VS Code extensions, Jekyll themes) may ship an outdated Mermaid engine and show "Invalid Mermaid code" even for valid syntax.
-
-| Diagram type | Min Mermaid version | Status |
-|---|---|---|
-| `flowchart` / `graph` | v8.0+ | Universal |
-| `sequenceDiagram` | v8.0+ | Universal |
-| `stateDiagram-v2` | v9.0+ | Widely supported |
-| `erDiagram` | v9.0+ | Widely supported |
-| `timeline` | v9.4+ | Fails on older apps |
-| `quadrantChart` | v10.6+ | Fails on older apps |
-| `architecture-beta` | v10.9+ | Experimental |
-| `mindmap` | v9.4+ | Partial support |
-| `block-beta` | v10.6+ | Partial support |
-
-> **Tip:** If a diagram renders on [mermaid.live](https://mermaid.live/) but not in your app, the app is likely running an outdated Mermaid version. Update the app or switch to a viewer with a newer engine.
-
-For maximum portability, prefer `graph TD`, `sequenceDiagram`, `stateDiagram-v2`, `erDiagram`, `quadrantChart`, and `timeline`.
-
----
-
-## When not to use this
-
-- **Quick unicode diagrams** for tweets or terminal output → wiretext.
-- **Lists of anything** → a table or bullets.
-- **Before/after comparisons** → a table.
-- **One-shape "diagrams"** — a single box with a label → just write the sentence.
-
-Before drawing, ask: *Would a reader learn more from this than from a well-written paragraph?* If no, don't draw.
+The agent uses the dark token palette and sets the init block accordingly.
 
 ---
 
 ## Examples
 
-### Flowchart — User login flow with validation
-
-**Scenario:** A user submits credentials, passes format and password checks, optionally completes 2FA, and is granted a session—or rejected at any failure gate.
+### Flowchart — Login flow with validation
 
 ```mermaid
 %%{init: {
@@ -231,17 +115,9 @@ graph TD
 
     class Grant focal;
     class Submit,CheckPW,Verify,Reject backend;
-
-%% Legend:
-%% ■ Focal (coral) — successful session grant
-%% □ Backend — process step
 ```
 
----
-
-### Sequence — OAuth2 handshake (4 actors)
-
-**Scenario:** A user initiates login through a client, the authorization server issues a code and exchanges it for an access token, and the client calls a protected API.
+### Sequence — OAuth2 handshake
 
 ```mermaid
 %%{init: {
@@ -280,17 +156,9 @@ sequenceDiagram
     A-->>-C: Access token
     C->>R: Request data
     R-->>C: Protected data
-
-%% Legend:
-%% AuthServer is the focal authority
-%% Actors: User, Client, AuthServer, API
 ```
 
----
-
-### Architecture — Web app → API → services → database
-
-**Scenario:** A single-page web app reaches an API gateway that routes traffic to domain services, each reading from a shared PostgreSQL database and a Redis cache.
+### Architecture — Web app stack
 
 ```mermaid
 %%{init: {
@@ -320,18 +188,9 @@ graph LR
     class Orders focal;
     class Web,API,Users backend;
     class Cache,DB store;
-
-%% Legend:
-%% ■ Focal (coral) — primary service
-%% □ Backend — service / gateway
-%% ▤ Store — database / cache
 ```
 
----
-
 ### State — Order lifecycle
-
-**Scenario:** An order moves from draft to pending approval, then through publish to archive, with each transition triggered by an explicit business event.
 
 ```mermaid
 %%{init: {
@@ -353,17 +212,9 @@ stateDiagram-v2
     Approved --> Published : publish
     Published --> Archived : archive
     Archived --> [*]
-
-%% Legend:
-%% Published is the focal milestone
-%% Standard states: Draft, Pending, Approved, Archived
 ```
 
----
-
 ### ER — E-commerce model
-
-**Scenario:** A customer places orders containing line items, each line item linking to a product, forming a normalized e-commerce domain model.
 
 ```mermaid
 erDiagram
@@ -395,11 +246,7 @@ erDiagram
     }
 ```
 
----
-
-### Timeline — Product roadmap 2023–2024
-
-**Scenario:** A startup ships a public beta in 2023, releases v1.0 and enterprise features in 2024, and closes a Series A by year end.
+### Timeline — Product roadmap
 
 ```mermaid
 timeline
@@ -413,11 +260,7 @@ timeline
     2024 Q4 : Series A
 ```
 
----
-
-### Quadrant — Q2 projects by Impact vs Effort
-
-**Scenario:** Six proposed Q2 initiatives are plotted to reveal quick wins, strategic bets, and items that should be deferred.
+### Quadrant — Q2 prioritization
 
 ```mermaid
 quadrantChart
@@ -436,11 +279,7 @@ quadrantChart
     Docs update: [0.2, 0.3]
 ```
 
----
-
-### Tree — API gateway dependency tree
-
-**Scenario:** The API gateway fans out to three downstream services, with the order service depending on Redis and PostgreSQL, and the user service depending on Kafka.
+### Tree — API gateway dependencies
 
 ```mermaid
 %%{init: {
@@ -470,18 +309,9 @@ graph TD
     class Order focal;
     class Auth,User backend;
     class Cache,DB,Events store;
-
-%% Legend:
-%% ■ Focal (coral) — primary downstream service
-%% □ Backend — service
-%% ▤ Store — database / cache / queue
 ```
 
----
-
-### Swimlane — Design → Engineering → QA → Deploy
-
-**Scenario:** A feature moves through four functional lanes, from design specs to production deployment, with code review and testing as explicit gates.
+### Swimlane — Feature delivery
 
 ```mermaid
 %%{init: {
@@ -521,17 +351,9 @@ graph LR
 
     class E1 focal;
     class D1,E2,Q1,P1 backend;
-
-%% Legend:
-%% ■ Focal (coral) — critical implementation step
-%% □ Backend — process step
 ```
 
----
-
-### Layer stack — Full-stack application layers
-
-**Scenario:** A modern stack is shown as five descending layers, from the React client down through gateway, services, cache, and PostgreSQL.
+### Layer stack — Full-stack layers
 
 ```mermaid
 %%{init: {
@@ -557,16 +379,9 @@ graph TB
 
     class L3 focal;
     class L1,L2,L4,L5 layer;
-
-%% Direction: requests flow downward
-%% Focal: Services layer — core business logic
 ```
 
----
-
-### Nested — Config cascade (Global → Org → Team → Repo)
-
-**Scenario:** Configuration resolution narrows from global defaults through organization and team scopes, ending at the most specific repository-level file.
+### Nested — Config cascade
 
 ```mermaid
 %%{init: {
@@ -598,14 +413,47 @@ graph TD
     end
 
     class Config focal;
-
-%% Legend:
-%% ■ Focal (coral) — most specific config file
-%% □ Node — scoped container
 ```
+
+---
+
+## Viewer compatibility
+
+| Feature | GitHub | Notion | Obsidian | GitLab | VS Code |
+|---|---|---|---|---|---|
+| `%%{init}%%` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `theme: base` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `classDef` (flowchart) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `architecture-beta` | ❓ | ❓ | ❓ | ❓ | ✅ |
+| `quadrantChart` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `timeline` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `mindmap` | ❓ | ❓ | ✅ | ❓ | ✅ |
+| `block-beta` | ❓ | ❓ | ❓ | ❓ | ✅ |
+
+### Mermaid version requirements
+
+Some diagram types need a recent Mermaid version. Older apps (e.g., MarkText, legacy VS Code extensions, Jekyll themes) may ship an outdated Mermaid engine and show "Invalid Mermaid code" even for valid syntax.
+
+| Diagram type | Min Mermaid version | Status |
+|---|---|---|
+| `flowchart` / `graph` | v8.0+ | Universal |
+| `sequenceDiagram` | v8.0+ | Universal |
+| `stateDiagram-v2` | v9.0+ | Widely supported |
+| `erDiagram` | v9.0+ | Widely supported |
+| `timeline` | v9.4+ | Fails on older apps |
+| `quadrantChart` | v10.6+ | Fails on older apps |
+| `architecture-beta` | v10.9+ | Experimental |
+| `mindmap` | v9.4+ | Partial support |
+| `block-beta` | v10.6+ | Partial support |
+
+> **Tip:** If a diagram renders on [mermaid.live](https://mermaid.live/) but not in your app, the app is likely running an outdated Mermaid version.
 
 ---
 
 ## License
 
 MIT
+
+---
+
+Made with care by **Valerio Fantozzi** 🦄
