@@ -161,6 +161,24 @@ This keeps the agent's working context tight (only load what you need) and makes
 | `mindmap` | ❓ | ❓ | ✅ | ❓ | ✅ |
 | `block-beta` | ❓ | ❓ | ❓ | ❓ | ✅ |
 
+### Mermaid version requirements
+
+Some diagram types need a recent Mermaid version. Older apps (e.g., MarkText, legacy VS Code extensions, Jekyll themes) may ship an outdated Mermaid engine and show "Invalid Mermaid code" even for valid syntax.
+
+| Diagram type | Min Mermaid version | Status |
+|---|---|---|
+| `flowchart` / `graph` | v8.0+ | Universal |
+| `sequenceDiagram` | v8.0+ | Universal |
+| `stateDiagram-v2` | v9.0+ | Widely supported |
+| `erDiagram` | v9.0+ | Widely supported |
+| `timeline` | v9.4+ | Fails on older apps |
+| `quadrantChart` | v10.6+ | Fails on older apps |
+| `architecture-beta` | v10.9+ | Experimental |
+| `mindmap` | v9.4+ | Partial support |
+| `block-beta` | v10.6+ | Partial support |
+
+> **Tip:** If a diagram renders on [mermaid.live](https://mermaid.live/) but not in your app, the app is likely running an outdated Mermaid version. Update the app or switch to a viewer with a newer engine.
+
 For maximum portability, prefer `graph TD`, `sequenceDiagram`, `stateDiagram-v2`, `erDiagram`, `quadrantChart`, and `timeline`.
 
 ---
