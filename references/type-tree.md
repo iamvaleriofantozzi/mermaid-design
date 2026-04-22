@@ -73,7 +73,7 @@ graph TD
   }
 }%%
 graph TD
-    classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
     classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
 
     API[API Gateway] --> Auth[Auth Service]

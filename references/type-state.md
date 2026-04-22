@@ -26,7 +26,7 @@ stateDiagram-v2
 - Transitions labeled as `event [guard] / action` (omit sections you don't need).
 - Self-loops: `State --> State : retry` — curves automatically.
 - Orient along the dominant flow direction (left→right or top→down); Mermaid's Dagre engine handles layout, but declaring states in flow order improves readability.
-- Coral on the state the reader should notice — typically the error state, or "happy completion". Use `classDef` if supported, otherwise rely on naming (`[Error 🚨]`).
+- Coral on the state the reader should notice — typically the error state, or "happy completion`. Do **not** use `classDef` or `class` — support in `stateDiagram-v2` is inconsistent and often produces "Invalid Mermaid code". Rely on naming, `Note` blocks, or `rect` regions for emphasis.
 
 ## Anti-patterns
 

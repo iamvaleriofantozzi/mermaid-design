@@ -38,6 +38,7 @@ sequenceDiagram
 - Self-messages: `A->>A: Self call` — keep labels short.
 - Return messages: dashed (`-->>`) in the same direction as the call.
 - Coral on the primary success response or headline message — one, maybe two. Use `rect` with `accent-tint` background for emphasis regions.
+- **Do not use `classDef` or `class`** — `sequenceDiagram` does not support them. Focal emphasis must be done via `rect` backgrounds or clear naming.
 
 ## Anti-patterns
 

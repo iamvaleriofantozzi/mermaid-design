@@ -84,9 +84,9 @@ architecture-beta
     svc:R --> L:cache
     svc:R --> L:db
 
-    classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
     classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
-    classDef store fill:rgba(28,25,23,0.05),stroke:#57534e,stroke-width:1px,color:#1c1917;
+    classDef store fill:#f5f4f3,stroke:#57534e,stroke-width:1px,color:#1c1917;
 
     class svc focal;
     class db store;
@@ -108,9 +108,9 @@ architecture-beta
   }
 }%%
 graph LR
-    classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+    classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
     classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
-    classDef store fill:rgba(28,25,23,0.05),stroke:#57534e,stroke-width:1px,color:#1c1917;
+    classDef store fill:#f5f4f3,stroke:#57534e,stroke-width:1px,color:#1c1917;
 
     Web[Web App] --> API[API Gateway]
     API --> SVC[Order Service]

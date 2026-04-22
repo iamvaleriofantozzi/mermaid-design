@@ -66,29 +66,31 @@ Good for essays, presentations, and informal docs. Avoid for technical architect
 
 Define these **once per diagram**, after the init block and before the graph body. Apply with `class NodeName focal;`.
 
+> **Critical:** Mermaid `classDef` only accepts **solid hex colors** (e.g., `#fdf6f4`) or named colors. It does **not** support CSS `rgba()` values or `stroke-dasharray`. Using `rgba()` in a `classDef` will produce an "Invalid Mermaid code" error. Use the hex values below, derived from the design-system tokens.
+
 ### Editorial palette classDefs
 
 ```mermaid
-classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
 classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
-classDef store fill:rgba(28,25,23,0.05),stroke:#57534e,stroke-width:1px,color:#1c1917;
-classDef external fill:rgba(28,25,23,0.03),stroke:rgba(28,25,23,0.30),stroke-width:1px,color:#1c1917;
-classDef input fill:rgba(87,83,78,0.10),stroke:#78716c,stroke-width:1px,color:#1c1917;
-classDef optional fill:rgba(28,25,23,0.02),stroke:rgba(28,25,23,0.20),stroke-width:1px,stroke-dasharray: 4 3,color:#78716c;
-classDef security fill:rgba(181,82,58,0.05),stroke:rgba(181,82,58,0.50),stroke-width:1px,stroke-dasharray: 4 4,color:#1c1917;
+classDef store fill:#f5f4f3,stroke:#57534e,stroke-width:1px,color:#1c1917;
+classDef external fill:#faf9f9,stroke:#b5b3b1,stroke-width:1px,color:#1c1917;
+classDef input fill:#f0efee,stroke:#78716c,stroke-width:1px,color:#1c1917;
+classDef optional fill:#fcfcfc,stroke:#d1d0cf,stroke-width:1px,color:#78716c;
+classDef security fill:#faf5f3,stroke:#daaa9d,stroke-width:1px,color:#1c1917;
 classDef link stroke:#2563eb,color:#2563eb;
 ```
 
 ### Dark mode classDefs
 
 ```mermaid
-classDef focal fill:rgba(214,114,74,0.10),stroke:#d6724a,stroke-width:2px,color:#faf7f2;
+classDef focal fill:#4a3b34,stroke:#d6724a,stroke-width:2px,color:#faf7f2;
 classDef backend fill:#292524,stroke:#faf7f2,stroke-width:1px,color:#faf7f2;
-classDef store fill:rgba(250,247,242,0.05),stroke:#a8a29e,stroke-width:1px,color:#faf7f2;
-classDef external fill:rgba(250,247,242,0.03),stroke:rgba(250,247,242,0.30),stroke-width:1px,color:#faf7f2;
-classDef input fill:rgba(168,162,158,0.10),stroke:#8e8680,stroke-width:1px,color:#faf7f2;
-classDef optional fill:rgba(250,247,242,0.02),stroke:rgba(250,247,242,0.20),stroke-width:1px,stroke-dasharray: 4 3,color:#8e8680;
-classDef security fill:rgba(214,114,74,0.05),stroke:rgba(214,114,74,0.50),stroke-width:1px,stroke-dasharray: 4 4,color:#faf7f2;
+classDef store fill:#3d3a38,stroke:#a8a29e,stroke-width:1px,color:#faf7f2;
+classDef external fill:#363432,stroke:#8e8680,stroke-width:1px,color:#faf7f2;
+classDef input fill:#3d3a38,stroke:#8e8680,stroke-width:1px,color:#faf7f2;
+classDef optional fill:#322f2d,stroke:#6b6864,stroke-width:1px,color:#8e8680;
+classDef security fill:#4a3b34,stroke:#daaa9d,stroke-width:1px,color:#faf7f2;
 classDef link stroke:#60a5fa,color:#60a5fa;
 ```
 
@@ -233,10 +235,12 @@ Not all Mermaid features work everywhere. Use this table to decide what is safe.
 | `%%{init}%%` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `theme: base` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `look: handDrawn` | ❌ | ❓ | ✅ | ❓ | ✅ |
-| `classDef` in flowchart | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `classDef` in sequence | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `classDef` in stateDiagram | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `classDef` in flowchart / graph | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `classDef` in sequenceDiagram | ❌ | ❌ | ❌ | ❌ | ❌ |
+| `classDef` in stateDiagram-v2 | ❓ | ❓ | ❓ | ❓ | ❓ |
 | `classDef` in erDiagram | ❌ | ❌ | ❌ | ❌ | ❌ |
+| `classDef` in timeline | ❌ | ❌ | ❌ | ❌ | ❌ |
+| `classDef` in quadrantChart | ❌ | ❌ | ❌ | ❌ | ❌ |
 | `architecture-beta` | ❓ | ❓ | ❓ | ❓ | ✅ |
 | `quadrantChart` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `timeline` | ✅ | ✅ | ✅ | ✅ | ✅ |

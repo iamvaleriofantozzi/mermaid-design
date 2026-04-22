@@ -193,11 +193,11 @@ Every diagram starts with an `init` block that sets the theme to `base` and load
 ### classDef for focal nodes
 
 ```mermaid
-classDef focal fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px,color:#1c1917;
+classDef focal fill:#fdf6f4,stroke:#b5523a,stroke-width:2px,color:#1c1917;
 classDef backend fill:#ffffff,stroke:#1c1917,stroke-width:1px,color:#1c1917;
-classDef store fill:rgba(28,25,23,0.05),stroke:#57534e,stroke-width:1px,color:#1c1917;
-classDef external fill:rgba(28,25,23,0.03),stroke:rgba(28,25,23,0.30),stroke-width:1px,color:#1c1917;
-classDef optional fill:rgba(28,25,23,0.02),stroke:rgba(28,25,23,0.20),stroke-width:1px,stroke-dasharray: 4 3,color:#78716c;
+classDef store fill:#f5f4f3,stroke:#57534e,stroke-width:1px,color:#1c1917;
+classDef external fill:#faf9f9,stroke:#b5b3b1,stroke-width:1px,color:#1c1917;
+classDef optional fill:#fcfcfc,stroke:#d1d0cf,stroke-width:1px,color:#78716c;
 classDef link stroke:#2563eb,color:#2563eb;
 ```
 

@@ -24,7 +24,7 @@ Every token is referred to by **semantic role**, not by its hex value. Type refe
 | `rule` | Hairline borders | `rgba(28,25,23,0.12)` | `rgba(250,247,242,0.12)` |
 | `rule-solid` | Stronger borders, baselines | `rgba(120,113,108,0.25)` | `rgba(168,162,158,0.25)` |
 | `accent` | Focal / 1–2 max per diagram | `#b5523a` | `#d6724a` |
-| `accent-tint` | Fill for accent-bordered boxes | `rgba(181,82,58,0.08)` | `rgba(214,114,74,0.10)` |
+| `accent-tint` | Fill for accent-bordered boxes | `#fdf6f4` | `rgba(214,114,74,0.10)` |
 | `link` | HTTP/API calls, external arrows | `#2563eb` | `#60a5fa` |
 
 > **Note:** Dark mode values are suggestions. Mermaid's `theme: dark` overrides many custom tokens. For full dark-mode control, use `theme: base` and set every `themeVariable` explicitly.
@@ -82,13 +82,13 @@ Semantic role combinations — reference these by name in type specs and apply v
 
 | Type | Fill | Stroke | `classDef` example |
 |---|---|---|---|
-| `focal` (1–2 max) | `accent-tint` | `accent` | `fill:rgba(181,82,58,0.08),stroke:#b5523a,stroke-width:2px` |
+| `focal` (1–2 max) | `accent-tint` | `accent` | `fill:#fdf6f4,stroke:#b5523a,stroke-width:2px` |
 | `backend` | `#ffffff` (white) | `ink` | `fill:#ffffff,stroke:#1c1917,stroke-width:1px` |
-| `store` | `ink @ 0.05` | `muted` | `fill:rgba(28,25,23,0.05),stroke:#57534e` |
-| `external` | `ink @ 0.03` | `ink @ 0.30` | `fill:rgba(28,25,23,0.03),stroke:rgba(28,25,23,0.30)` |
-| `input` | `muted @ 0.10` | `soft` | `fill:rgba(87,83,78,0.10),stroke:#78716c` |
-| `optional` | `ink @ 0.02` | `ink @ 0.20` dashed | `fill:rgba(28,25,23,0.02),stroke:rgba(28,25,23,0.20),stroke-dasharray: 4 3` |
-| `security` | `accent @ 0.05` | `accent @ 0.50` dashed | `fill:rgba(181,82,58,0.05),stroke:rgba(181,82,58,0.50),stroke-dasharray: 4 4` |
+| `store` | `ink @ 0.05` | `muted` | `fill:#f5f4f3,stroke:#57534e` |
+| `external` | `ink @ 0.03` | `ink @ 0.30` | `fill:#faf9f9,stroke:#b5b3b1` |
+| `input` | `muted @ 0.10` | `soft` | `fill:#f0efee,stroke:#78716c` |
+| `optional` | `ink @ 0.02` | `ink @ 0.20` dashed | `fill:#fcfcfc,stroke:#d1d0cf` |
+| `security` | `accent @ 0.05` | `accent @ 0.50` dashed | `fill:#faf5f3,stroke:#daaa9d` |
 
 ---
 
