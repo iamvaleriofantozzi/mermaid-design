@@ -45,8 +45,6 @@ timeline
     2024 Q2 : Enterprise features
             : SOC 2 compliance
     2024 Q4 : Series A
-
-%% Focal: v1.0 release and Series A
 ```
 
 ## Limitation

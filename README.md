@@ -359,7 +359,7 @@ erDiagram
     ORDER {
         int id PK
         int customer_id FK
-        datetime created_at
+        string created_at
         string status
     }
     LINE_ITEM {
@@ -375,10 +375,6 @@ erDiagram
         string name
         float price
     }
-
-%% Legend:
-%% Central entity: ORDER (aggregate root)
-%% || one  ○ zero  { many
 ```
 
 ---
@@ -397,8 +393,6 @@ timeline
     2024 Q2 : Enterprise features
             : SOC 2 compliance
     2024 Q4 : Series A
-
-%% Focal milestones: V1.0 RELEASE, Series A
 ```
 
 ---
@@ -422,9 +416,6 @@ quadrantChart
     Mobile app: [0.8, 0.4]
     Onboarding revamp: [0.4, 0.7]
     Docs update: [0.2, 0.3]
-
-%% Focal: Auth rewrite (Quick Win — high impact, low effort)
-%% Top-right position = Do First priority
 ```
 
 ---

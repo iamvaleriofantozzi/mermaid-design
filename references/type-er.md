@@ -57,7 +57,7 @@ erDiagram
     ORDER {
         int id PK
         int customer_id FK
-        datetime created_at
+        string created_at
         string status
     }
     LINE_ITEM {
